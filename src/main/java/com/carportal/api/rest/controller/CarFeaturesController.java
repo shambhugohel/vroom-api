@@ -5,8 +5,8 @@ import static com.carportal.utils.URLConstant.MappingConstant.ROOTURL;
 import com.carportal.entity.ECarFeatures;
 import com.carportal.exceptions.ServiceException;
 import com.carportal.service.CarFeaturesService;
+import jakarta.validation.Valid;
 import java.net.URI;
-import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +23,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping(value = ROOTURL)
 public class CarFeaturesController {
 
-  private final Logger logger = LoggerFactory.getLogger(CarFeaturesController.class.getName());
+  private final static Logger LOGGER = LoggerFactory.getLogger(
+      CarFeaturesController.class.getName());
 
-  private CarFeaturesService carFeaturesService;
+  private final CarFeaturesService carFeaturesService;
 
   @Autowired
   public CarFeaturesController(CarFeaturesService carFeaturesService) {
-    if (logger.isTraceEnabled()) {
-      logger.trace("** CarFeaturesController()");
+    if (LOGGER.isTraceEnabled()) {
+      LOGGER.trace("** CarFeaturesController()");
     }
     this.carFeaturesService = carFeaturesService;
   }
@@ -39,18 +40,18 @@ public class CarFeaturesController {
   public ResponseEntity<ECarFeatures> addCarfeatures(@RequestBody @Valid ECarFeatures ECarFeatures,
       @RequestParam Long carDetailId) throws ServiceException {
 
-    if (logger.isTraceEnabled()) {
-      logger.trace(">> addCarfeatures()");
+    if (LOGGER.isTraceEnabled()) {
+      LOGGER.trace(">> addCarfeatures()");
     }
 
     ECarFeatures newECarFeatures = ECarFeatures;
     carFeaturesService.saveCarFeatures(newECarFeatures, carDetailId);
 
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{carFeatureId}")
-        .buildAndExpand(newECarFeatures.getCarFeaturesId()).toUri();
+        .buildAndExpand(newECarFeatures.getId()).toUri();
 
-    if (logger.isTraceEnabled()) {
-      logger.trace("<< addCarfeatures()");
+    if (LOGGER.isTraceEnabled()) {
+      LOGGER.trace("<< addCarfeatures()");
     }
 
     return ResponseEntity.created(uri).build();

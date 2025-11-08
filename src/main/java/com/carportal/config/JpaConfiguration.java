@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @EnableJpaAuditing(auditorAwareRef = ApplicationConstants.AUDIT_PROVIDER_NAME)
 @EnableJpaRepositories(basePackages = ApplicationConstants.PKG_REPOSITORY)
-public class JpaConfig {
+public class JpaConfiguration {
 
 
 }

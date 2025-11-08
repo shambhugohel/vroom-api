@@ -7,7 +7,9 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class EnumUtil {
 
   private static final Map<Class<?>, Map<?, ?>> DB_CACHE = new ConcurrentHashMap<>();

@@ -2,7 +2,9 @@ package com.carportal.service;
 
 import com.carportal.entity.ECarFeatures;
 import java.util.Optional;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface CarFeaturesService {
 
   void saveCarFeatures(ECarFeatures entity, Long carDetailId);

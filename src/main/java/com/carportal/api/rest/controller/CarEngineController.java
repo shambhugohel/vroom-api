@@ -28,14 +28,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping(value = ROOTURL)
 public class CarEngineController {
 
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
+  private final static Logger LOGGER = LoggerFactory.getLogger(CarEngineController.class.getName());
 
-  private CarEngineService carEngineService;
+  private final CarEngineService carEngineService;
 
   @Autowired
   public CarEngineController(CarEngineService carEngineService) {
-    if (logger.isTraceEnabled()) {
-      logger.trace("** CarEngineController()");
+    if (LOGGER.isTraceEnabled()) {
+      LOGGER.trace("** CarEngineController()");
     }
     this.carEngineService = carEngineService;
   }
@@ -43,15 +43,15 @@ public class CarEngineController {
   @PostMapping(path = "/cardetails/carengines", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<ECarEngine> addCarEngine(@RequestBody @Valid ECarEngine newECarEngine,
       @RequestParam Long carDetailId) throws ServiceException {
-    if (logger.isTraceEnabled()) {
-      logger.trace(">> addCarEngine()");
+    if (LOGGER.isTraceEnabled()) {
+      LOGGER.trace(">> addCarEngine()");
     }
     carEngineService.saveCarEngine(newECarEngine, carDetailId);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{carEngineId}")
         .buildAndExpand(newECarEngine.getId()).toUri();
 
-    if (logger.isTraceEnabled()) {
-      logger.trace("<< addCarEngine()");
+    if (LOGGER.isTraceEnabled()) {
+      LOGGER.trace("<< addCarEngine()");
     }
 
     return ResponseEntity.created(uri).build();
@@ -59,8 +59,8 @@ public class CarEngineController {
 
   @GetMapping(path = "/cardetails/carengine/{carEngineId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.FOUND)
-  public ECarEngine getById(@PathVariable Long carEngineId) throws Exception {
-    logger.debug("CarEngine Controller getById Method");
+  public ECarEngine getById(@PathVariable Long carEngineId) {
+    LOGGER.debug("CarEngine Controller getById Method");
     return carEngineService.findById(carEngineId)
         .orElseThrow(() -> new EntityNotFoundException(Long.toString(carEngineId)));
   }

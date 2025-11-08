@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Exception.class)
 public class CarEngineServiceImpl implements CarEngineService {
 
-  private CarEngineRepository carEngineRepository;
+  private final CarEngineRepository carEngineRepository;
 
-  private CarDetailService carDetailService;
+  private final CarDetailService carDetailService;
 
   @Autowired
   public CarEngineServiceImpl(CarEngineRepository carEngineRepository,
@@ -30,7 +30,7 @@ public class CarEngineServiceImpl implements CarEngineService {
     Optional<ECarDetails> optionalCarDetails = Optional.of(carDetailService.findById(carDetailId))
         .get();
     optionalCarDetails.ifPresent(carDetails -> {
-      entity.setCarDetails(carDetails);
+//      entity.setCarDetails(carDetails);
       carEngineRepository.save(entity);
     });
   }

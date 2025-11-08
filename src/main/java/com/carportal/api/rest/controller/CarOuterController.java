@@ -22,14 +22,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping(value = ROOTURL)
 public class CarOuterController {
 
-  private final Logger logger = LoggerFactory.getLogger(CarOuterController.class.getName());
+  private final static Logger LOGGER = LoggerFactory.getLogger(CarOuterController.class.getName());
 
-  private CarOuterService carOuterService;
+  private final CarOuterService carOuterService;
 
   @Autowired
   public CarOuterController(CarOuterService carOuterService) {
-    if (logger.isTraceEnabled()) {
-      logger.trace("** CarOuterController()");
+    if (LOGGER.isTraceEnabled()) {
+      LOGGER.trace("** CarOuterController()");
     }
     this.carOuterService = carOuterService;
   }
@@ -39,16 +39,16 @@ public class CarOuterController {
       @RequestParam Long carDetailId)
       throws ServiceException {
 
-    if (logger.isTraceEnabled()) {
-      logger.trace(">> addCarOuter()");
+    if (LOGGER.isTraceEnabled()) {
+      LOGGER.trace(">> addCarOuter()");
     }
 
     ECarOuter newECarOuter = ECarOuter;
     carOuterService.saveCarOuter(newECarOuter, carDetailId);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{carOuterId}")
-        .buildAndExpand(newECarOuter.getCarOuterId()).toUri();
-    if (logger.isTraceEnabled()) {
-      logger.trace("<< addCarOuter()");
+        .buildAndExpand(newECarOuter.getId()).toUri();
+    if (LOGGER.isTraceEnabled()) {
+      LOGGER.trace("<< addCarOuter()");
     }
 
     return ResponseEntity.created(uri).build();

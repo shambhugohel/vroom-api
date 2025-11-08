@@ -1,13 +1,12 @@
 package com.carportal.utils;
 
+import lombok.experimental.UtilityClass;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+@UtilityClass
 public class PaginationUtils {
-
-  private PaginationUtils() {
-  }
 
   public static final int DEFAULT_PAGE = 0;
   public static final int DEFAULT_SIZE = 20;

@@ -5,8 +5,8 @@ import com.carportal.entity.ECarFeatures;
 import com.carportal.repository.CarFeaturesRepository;
 import com.carportal.service.CarDetailService;
 import com.carportal.service.CarFeaturesService;
+import jakarta.transaction.Transactional;
 import java.util.Optional;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 @Transactional(rollbackOn = Exception.class)
 public class CarFeaturesServiceImpl implements CarFeaturesService {
 
-  private CarFeaturesRepository carFeaturesRepository;
+  private final CarFeaturesRepository carFeaturesRepository;
 
-  private CarDetailService carDetailService;
+  private final CarDetailService carDetailService;
 
   @Autowired
   public CarFeaturesServiceImpl(CarFeaturesRepository carFeaturesRepository,
@@ -45,7 +45,7 @@ public class CarFeaturesServiceImpl implements CarFeaturesService {
     Optional<ECarDetails> optionalCarDetails = Optional.of(carDetailService.findById(carDetailId))
         .get();
     optionalCarDetails.ifPresent(carDetails -> {
-      com.carportal.entity.ECarFeatures.setCarDetails(carDetails);
+//      com.carportal.entity.ECarFeatures.setCarDetails(carDetails);
       carFeaturesRepository.save(ECarFeatures);
     });
     return Optional.of(ECarFeatures);

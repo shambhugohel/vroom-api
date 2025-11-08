@@ -11,7 +11,7 @@ public enum Drivetrain implements DbEnum<String> {
 
   FWD("FWD", "Front-wheel Drive"),
   RWD("RWD", "Rear-wheel drive"),
-  FourWD("4WD", "All-wheel drive"),
+  //  FourWD("4WD", "All-wheel drive"),
   AWD("AWD", "Four-wheel drive");
 
   private final String dbValue;     // value stored in DB

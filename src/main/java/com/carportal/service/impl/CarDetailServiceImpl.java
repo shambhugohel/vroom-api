@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Exception.class)
 public class CarDetailServiceImpl implements CarDetailService {
 
-  private CarDetailRepository carDetailRepository;
+  private final CarDetailRepository carDetailRepository;
 
   @Autowired
   public CarDetailServiceImpl(CarDetailRepository carDetailRepository) {
@@ -21,8 +21,8 @@ public class CarDetailServiceImpl implements CarDetailService {
   }
 
   @Override
-  public ECarDetails saveCarDetail(ECarDetails ECarDetails) {
-    return carDetailRepository.save(ECarDetails);
+  public ECarDetails saveCarDetail(ECarDetails eCarDetails) {
+    return carDetailRepository.save(eCarDetails);
   }
 
   @Override

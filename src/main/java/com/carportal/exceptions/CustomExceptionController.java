@@ -40,7 +40,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 @RequiredArgsConstructor
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
+public class CustomExceptionController extends ResponseEntityExceptionHandler {
 
   private final ApiErrorProperties properties;
 

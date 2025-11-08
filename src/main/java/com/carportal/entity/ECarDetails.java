@@ -66,4 +66,8 @@ public class ECarDetails extends AuditableEntity {
   @OneToOne(mappedBy = "eCarDetails", cascade = CascadeType.ALL, optional = true, orphanRemoval = true)
   private ECarOuter eCarOuter;
 
+  public static ECarEngine newInstanceForCreation() {
+    return new ECarEngine();
+  }
+
 }

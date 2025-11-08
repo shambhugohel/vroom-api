@@ -3,9 +3,8 @@ package com.carportal.config;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomGeneratorRegistrar implements GenerationTypeStrategyRegistrationProvider {
+public class CustomGeneratorRegistrar {
 
-  @Override
   public Map<String, Class<?>> getRegisteredGenerators() {
     Map<String, Class<?>> map = new HashMap<>();
     map.put("prefixed-sequence", PrefixedSequenceIdGenerator.class);
