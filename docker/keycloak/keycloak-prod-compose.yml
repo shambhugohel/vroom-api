@@ -1,0 +1,108 @@
+version: "3.8"
+
+services:
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.1   # pin to a tested version (avoid :latest in prod)
+    container_name: keycloak
+    # Run Keycloak in production mode (not start-dev)
+    command: ["start"]
+    environment:
+      - KC_DB=postgres
+      - KC_DB_URL_HOST=postgres
+      - KC_DB_URL_DATABASE=keycloakdb
+      - KC_PROXY=edge                       # if behind a reverse-proxy; set appropriately
+      - KC_HOSTNAME=auth.example.com        # change to your fqdn (or use KC_HOSTNAME_PROVIDER)
+      - KC_HTTP_RELATIVE_PATH=/             # if you use a context path
+      - KC_METRICS_ENABLED=true
+      - KC_HEALTH_ENABLED=true
+      - KC_HTTP_ENABLED=true
+      - KC_LOG_LEVEL=INFO
+      # Admin credentials from docker secrets (safer than env)
+      - KEYCLOAK_ADMIN_FILE=/run/secrets/keycloak_admin_user
+      - KEYCLOAK_ADMIN_PASSWORD_FILE=/run/secrets/keycloak_admin_password
+      # DB auth from docker secrets
+      - KC_DB_USERNAME_FILE=/run/secrets/keycloak_db_user
+      - KC_DB_PASSWORD_FILE=/run/secrets/keycloak_db_password
+    ports:
+      - "8443:8443"      # don't expose 8080/8443 publicly without TLS termination; map to host if needed
+      # - "8080:8080"    # optional for internal networks only
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS --max-time 3 https://localhost:8443/realms/master/.well-known/openid-configuration || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 6
+      start_period: 40s
+    restart: unless-stopped
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+      # mount realm import only if you need to bootstrap realms
+      # - ./realm-export/:/opt/keycloak/import:ro
+    networks:
+      - internal
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 4G
+
+  postgres:
+    image: postgres:15-alpine            # pin a stable Postgres release
+    container_name: kc_postgres
+    environment:
+      - POSTGRES_DB=keycloakdb
+      - POSTGRES_USER_FILE=/run/secrets/keycloak_db_user
+      - POSTGRES_PASSWORD_FILE=/run/secrets/keycloak_db_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $(cat /run/secrets/keycloak_db_user) -d keycloakdb -h localhost || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - internal
+    # do not expose Postgres port to the public host
+    # ports: ["5432:5432"]  <-- avoid this in prod
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 2G
+
+  # (Optional) reverse-proxy service example - recommended to run outside this compose or as a separate stack
+  # traefik:
+  #   image: traefik:v2.10
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./traefik/traefik.yml:/traefik.yml:ro
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #   networks:
+  #     - internal
+  #   restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+  keycloak_data:
+    driver: local
+
+secrets:
+  keycloak_admin_user:
+    file: ./secrets/keycloak_admin_user.txt
+  keycloak_admin_password:
+    file: ./secrets/keycloak_admin_password.txt
+  keycloak_db_user:
+    file: ./secrets/keycloak_db_user.txt
+  keycloak_db_password:
+    file: ./secrets/keycloak_db_password.txt
+
+networks:
+  internal:
+    driver: bridge
