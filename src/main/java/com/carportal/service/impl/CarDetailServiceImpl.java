@@ -7,7 +7,6 @@ import com.carportal.service.CarDetailService;
 import java.util.Collection;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,21 +16,42 @@ import org.springframework.transaction.annotation.Transactional;
 public class CarDetailServiceImpl implements CarDetailService {
 
   private final CarDetailRepository carDetailRepository;
+  private final com.carportal.service.AiCarEnrichmentService aiCarEnrichmentService;
 
-//  @Override
-//  public ECarDetails saveCarDetail(CarDetailsDTO detailsDTO) {
-//    // get details from dto and create model Cardetailsmodel
-//    // check user role delaler, buyer, seller, agent, inspection,
-//    // car valuation
-//    // car inspection
-//    // Service history fetch
-//    // Accident history check
-//    return null;
-//  }
+  // @Override
+  // public ECarDetails saveCarDetail(CarDetailsDTO detailsDTO) {
+  // // get details from dto and create model Cardetailsmodel
+  // // check user role delaler, buyer, seller, agent, inspection,
+  // // car valuation
+  // // car inspection
+  // // Service history fetch
+  // // Accident history check
+  // return null;
+  // }
 
   @Override
-  public ECarDetails saveCarDetail(ECarDetails ECarDetails) {
-    return null;
+  public ECarDetails saveCarDetail(ECarDetails carDetails) {
+    // Logic to check if user is paid (mocked for now)
+    boolean isPaidUser = true;
+
+    if (isPaidUser) {
+      // Create a DTO from the entity to pass to the enrichment service
+      // In a real app, we might have the DTO available or use a mapper.
+      // Here we manually construct a minimal DTO for the AI service.
+      var dto = new CarDetailsDTO();
+      dto.setCarManufacturer(carDetails.getCarManufacturer());
+      dto.setCarModel(carDetails.getCarModel());
+      dto.setManufacturedYear(carDetails.getManufacturedYear());
+      dto.setDescription(carDetails.getDescription());
+
+      var enrichedDetails = aiCarEnrichmentService.enrichCarDetails(dto);
+      if (enrichedDetails != null) {
+        carDetails.enrichWith(enrichedDetails.getECarEngine(), enrichedDetails.getECarFeatures(),
+            enrichedDetails.getECarOuter());
+      }
+    }
+
+    return carDetailRepository.save(carDetails);
   }
 
   @Override

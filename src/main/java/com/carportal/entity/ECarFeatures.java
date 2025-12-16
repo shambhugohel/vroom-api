@@ -101,4 +101,7 @@ public class ECarFeatures extends AuditableEntity {
   @JoinColumn(name = "carDetailId")
   private ECarDetails eCarDetails;
 
+  public static ECarFeatures newInstanceForCreation() {
+    return new ECarFeatures();
+  }
 }
