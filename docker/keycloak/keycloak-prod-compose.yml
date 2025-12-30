@@ -6,7 +6,7 @@ services:
     image: quay.io/keycloak/keycloak:22.0.1   # pin to a tested version (avoid :latest in prod)
     container_name: keycloak
     # Run Keycloak in production mode (not start-dev)
-    command: ["start"]
+    command: [ "start" ]
     environment:
       - KC_DB=postgres
       - KC_DB_URL_HOST=postgres
@@ -31,7 +31,7 @@ services:
       postgres:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -fsS --max-time 3 https://localhost:8443/realms/master/.well-known/openid-configuration || exit 1"]
+      test: [ "CMD-SHELL", "curl -fsS --max-time 3 https://localhost:8443/realms/master/.well-known/openid-configuration || exit 1" ]
       interval: 15s
       timeout: 5s
       retries: 6
@@ -59,7 +59,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $(cat /run/secrets/keycloak_db_user) -d keycloakdb -h localhost || exit 1"]
+      test: [ "CMD-SHELL", "pg_isready -U $(cat /run/secrets/keycloak_db_user) -d keycloakdb -h localhost || exit 1" ]
       interval: 10s
       timeout: 5s
       retries: 5

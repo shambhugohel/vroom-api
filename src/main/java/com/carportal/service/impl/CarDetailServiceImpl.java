@@ -1,6 +1,7 @@
 package com.carportal.service.impl;
 
-import com.carportal.api.rest.dto.CarDetailsDTO;
+import com.carportal.ai.service.impl.AiCarEnrichmentService;
+import com.carportal.dto.CarDetailsDTO;
 import com.carportal.entity.ECarDetails;
 import com.carportal.repository.CarDetailRepository;
 import com.carportal.service.CarDetailService;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CarDetailServiceImpl implements CarDetailService {
 
   private final CarDetailRepository carDetailRepository;
-  private final com.carportal.service.AiCarEnrichmentService aiCarEnrichmentService;
+  private final AiCarEnrichmentService aiCarEnrichmentService;
 
   // @Override
   // public ECarDetails saveCarDetail(CarDetailsDTO detailsDTO) {

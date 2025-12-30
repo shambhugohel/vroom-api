@@ -2,8 +2,8 @@ package com.carportal.api.rest.controller;
 
 import static com.carportal.utils.URLConstant.MappingConstant.ROOTURL;
 
-import com.carportal.api.rest.dto.common.PageRequestDTO;
-import com.carportal.api.rest.dto.common.PagedResponse;
+import com.carportal.dto.common.PageRequestDTO;
+import com.carportal.dto.common.PagedResponse;
 import com.carportal.entity.ECarDetails;
 import com.carportal.service.CarDetailService;
 import lombok.RequiredArgsConstructor;

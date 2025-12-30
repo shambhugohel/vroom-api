@@ -36,7 +36,7 @@ public class ServiceException extends RuntimeException {
   private static HttpStatus defaultStatus(ExceptionType type) {
     return switch (type) {
       case VALIDATION -> HttpStatus.BAD_REQUEST;
-      case BUSINESS -> HttpStatus.UNPROCESSABLE_ENTITY;
+      case BUSINESS -> HttpStatus.valueOf(422);
       case DATABASE -> HttpStatus.CONFLICT;
       case NETWORK -> HttpStatus.GATEWAY_TIMEOUT;
       default -> HttpStatus.INTERNAL_SERVER_ERROR;

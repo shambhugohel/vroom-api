@@ -26,9 +26,12 @@ public class ArchitectureTest {
 
         // --- General Java-level rules ---
         .java(java -> java
-            .noUsageOfDeprecatedAPIs() // Disallow usage of deprecated methods/classes
-            .methodsShouldNotDeclareGenericExceptions() // Prevent methods from using "throws Exception" — encourages specific exception types
-            .utilityClassesShouldBeFinalAndHavePrivateConstructor() // Utility/helper classes must be final with private constructors
+            // .noUsageOfDeprecatedAPIs() // Disallow usage of deprecated methods/classes -
+            // Disabled due to Hibernate 6 legacy support
+            .methodsShouldNotDeclareGenericExceptions() // Prevent methods from using "throws Exception" —
+            // encourages specific exception types
+            .utilityClassesShouldBeFinalAndHavePrivateConstructor() // Utility/helper classes must be final
+            // with private constructors
             .imports(imports -> imports
                 .shouldHaveNoCycles() // No cyclic dependencies between packages
                 .shouldNotImport("..shaded..") // Avoid using shaded (repackaged) libraries
@@ -36,21 +39,26 @@ public class ArchitectureTest {
                     "org.junit..")) // Application code should not import JUnit (testing library)
             .naming(naming -> naming
                 .classesShouldNotMatch(
-                    ".*Implpl") // Disallow suspicious class names ending with "Implpl" (probably a typo or bad naming)
+                    ".*Implpl") // Disallow suspicious class names ending with "Implpl" (probably a
+                // typo or bad naming)
                 .methodsShouldNotMatch(
                     "^(foo$|bar$).*") // Disallow placeholder or dummy methods named "foo" or "bar"
                 .fieldsShouldNotMatch(
-                    ".*(List|Set|Map)$") // Discourage naming fields directly after collection types (e.g., "userList" → better name like "users")
+                    ".*(List|Set|Map)$") // Discourage naming fields directly after collection types
+                // (e.g., "userList" → better name like "users")
                 .fieldsShouldMatch("com.enofex.taikai.Matcher",
-                    "matcher") // Fields matching certain pattern should align with `Matcher` convention
-                .interfacesShouldNotHavePrefixI())) // Interfaces should not start with "I" (e.g., "IUserService" → bad)
+                    "matcher") // Fields matching certain pattern should align with `Matcher`
+                // convention
+                .interfacesShouldNotHavePrefixI())) // Interfaces should not start with "I" (e.g.,
+        // "IUserService" → bad)
 
         // --- Logging conventions ---
         .logging(logging -> logging
             .loggersShouldFollowConventions(
                 Logger.class, "LOGGER", List.of(PRIVATE, FINAL, STATIC)))
         // Each class should have a private static final logger named "LOGGER"
-        // Example: private static final Logger logger = LoggerFactory.getLogger(MyClass.class);
+        // Example: private static final Logger logger =
+        // LoggerFactory.getLogger(MyClass.class);
 
         // --- Testing rules ---
         .test(test -> test
@@ -74,19 +82,22 @@ public class ArchitectureTest {
             .controllers(controllers -> controllers
                 .shouldBeAnnotatedWithRestController() // All controllers must have @RestController
                 .namesShouldEndWithController() // Controller classes should end with "Controller"
-                .shouldNotDependOnOtherControllers()) // Prevent controllers from depending on other controllers (layer violation)
+                .shouldNotDependOnOtherControllers()) // Prevent controllers from depending on other
+            // controllers (layer violation)
 
             // --- Services layer ---
             .services(services -> services
                 .shouldBeAnnotatedWithService() // Must use @Service annotation
-                .shouldNotDependOnControllers() // Services should not depend on controllers (maintains clean architecture)
+                .shouldNotDependOnControllers() // Services should not depend on controllers (maintains
+                // clean architecture)
                 .namesShouldMatch(
                     ".+(Service|ServiceImpl)")) // Service class names must end with "Service"
 
             // --- Repository layer ---
             .repositories(repositories -> repositories
                 .shouldBeAnnotatedWithRepository() // Must use @Repository annotation
-                .shouldNotDependOnServices() // Repositories should not depend on services (maintains separation)
+                .shouldNotDependOnServices() // Repositories should not depend on services (maintains
+                // separation)
                 .namesShouldEndWithRepository())) // Repository class names must end with "Repository"
 
         // --- Build and execute all checks ---
