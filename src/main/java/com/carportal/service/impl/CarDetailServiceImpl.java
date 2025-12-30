@@ -32,6 +32,17 @@ public class CarDetailServiceImpl implements CarDetailService {
 
   @Override
   public ECarDetails saveCarDetail(ECarDetails carDetails) {
+    // Generate Business ID
+    String prefix = carDetails.getClass().getSimpleName().length() >= 3
+        ? carDetails.getClass().getSimpleName().substring(0, 3).toUpperCase()
+        : "ENT";
+    String timestamp = java.time.LocalDateTime.now()
+        .format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+    long random = (long) (Math.random() * 1000);
+    String businessId = prefix + timestamp + String.format("%03d", random);
+
+    carDetails.assignBusinessId(businessId);
+
     // Logic to check if user is paid (mocked for now)
     boolean isPaidUser = true;
 

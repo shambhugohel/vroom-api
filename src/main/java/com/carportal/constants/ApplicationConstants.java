@@ -12,13 +12,18 @@ public class ApplicationConstants {
     public static final String TBL_CAR_ENGINE = "tbl_car_engine";
     public static final String TBL_CAR_FEATURES = "tbl_car_feature";
     public static final String TBL_CAR_OUTER = "tbl_car_outer";
+    public static final String TBL_CAR_PHOTOS = "tbl_car_photos";
 
   }
 
   public class Sequence {
 
-    public static final String STRATEGY = "com.carportal.config.PrefixedSequenceIdGenerator";
-    public static final String BASE_CUS_SEQ_NAME = "car-seq";
+    public static final String SEQ_GEN_NAME = "seq_gen";
+    public static final String CAR_DETAILS_SEQ = "CAR_DETAILS_SEQ";
+    public static final String CAR_ENGINE_SEQ = "CAR_ENGINE_SEQ";
+    public static final String CAR_FEATURES_SEQ = "CAR_FEATURES_SEQ";
+    public static final String CAR_OUTER_SEQ = "CAR_OUTER_SEQ";
+    public static final String CAR_PHOTO_SEQ = "CAR_PHOTO_SEQ";
 
   }
 
@@ -31,7 +36,9 @@ public class ApplicationConstants {
     public static final String UPDATED_AT = "UPDATED_AT";
     public static final String UPDATED_BY = "UPDATED_BY";
     public static final String VERSION = "version";
-
+    public static final String IS_ACTIVE = "IS_ACTIVE";
+    public static final String DELETED_AT = "DELETED_AT";
+    public static final String DELETED_BY = "DELETED_BY";
 
     // CarDetails
     public static final String CAR_DETAIL_ID = "CAR_DETAIL_ID";
@@ -93,7 +100,33 @@ public class ApplicationConstants {
     public static final String NO_OF_DOORS = "NO_OF_DOORS";
     public static final String FRONT_BRAKE_TYPE = "FRONT_BRAKE_TYPE";
     public static final String REAR_BRAKE_TYPE = "REAR_BRAKE_TYPE";
+    public static final String BUSINESS_ID = "BUSINESS_ID";
 
+    // car photo
+    public static final String CAR_PHOTOS_ID = "CAR_PHOTOS_ID";
+  }
+
+  public class Index {
+
+    // CarDetails
+    public static final String IDX_CAR_DETAILS_BUSINESS_ID = "IDX_CAR_DETAILS_BUSINESS_ID";
+    public static final String IDX_CAR_DETAILS_IS_ACTIVE = "idx_car_details_is_active";
+
+    // CarEngine
+    public static final String IDX_CAR_ENGINE_BUSINESS_ID = "IDX_CAR_ENGINE_BUSINESS_ID";
+    public static final String IDX_CAR_ENGINE_IS_ACTIVE = "idx_car_engine_is_active";
+
+    // CarFeatures
+    public static final String IDX_CAR_FEATURES_BUSINESS_ID = "IDX_CAR_FEATURES_BUSINESS_ID";
+    public static final String IDX_CAR_FEATURES_IS_ACTIVE = "idx_car_features_is_active";
+
+    // CarOuter
+    public static final String IDX_CAR_OUTER_BUSINESS_ID = "IDX_CAR_OUTER_BUSINESS_ID";
+    public static final String IDX_CAR_OUTER_IS_ACTIVE = "idx_car_outer_is_active";
+
+    // CarPhoto
+    public static final String IDX_CAR_PHOTO_BUSINESS_ID = "IDX_CAR_PHOTO_BUSINESS_ID";
+    public static final String IDX_CAR_PHOTO_IS_ACTIVE = "idx_car_photo_is_active";
   }
 
   public class Exception {
@@ -109,6 +142,5 @@ public class ApplicationConstants {
   // Bean & Config
   public static final String AUDIT_PROVIDER_NAME = "auditorProvider";
   public static final String PKG_REPOSITORY = "com.carportal.repository";
-
 
 }

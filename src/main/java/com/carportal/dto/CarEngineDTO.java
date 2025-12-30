@@ -17,6 +17,9 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Car Engine details DTO for REST API")
 public class CarEngineDTO {
 
+  @Schema(description = "Business ID", example = "ENG20231010123123123")
+  private String businessId;
+
   @Schema(description = "Mileage (km/l or km/kWh)", example = "18.5")
   @Positive
   private double mileage;

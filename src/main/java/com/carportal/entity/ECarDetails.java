@@ -10,7 +10,9 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Index;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import lombok.AccessLevel;
@@ -23,11 +25,15 @@ import lombok.ToString;
 @Getter
 @Entity
 @Setter(AccessLevel.PROTECTED)
+@ToString(onlyExplicitlyIncluded = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(onlyExplicitlyIncluded = true, callSuper = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-@Table(schema = Db.TBL_SCHEMA_CAR_PORTAL, name = Db.TBL_CAR_DETAILS)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+@Table(schema = Db.TBL_SCHEMA_CAR_PORTAL, name = Db.TBL_CAR_DETAILS, indexes = {
+    @Index(name = ApplicationConstants.Index.IDX_CAR_DETAILS_BUSINESS_ID, columnList = ApplicationConstants.Column.BUSINESS_ID),
+    @Index(name = ApplicationConstants.Index.IDX_CAR_DETAILS_IS_ACTIVE, columnList = ApplicationConstants.Column.IS_ACTIVE)
+})
 @AttributeOverride(name = ApplicationConstants.Column.ID, column = @Column(name = ApplicationConstants.Column.CAR_DETAIL_ID))
+@SequenceGenerator(name = ApplicationConstants.Sequence.SEQ_GEN_NAME, sequenceName = ApplicationConstants.Sequence.CAR_DETAILS_SEQ)
 public class ECarDetails extends AuditableEntity {
 
   @ToString.Include
@@ -57,13 +63,13 @@ public class ECarDetails extends AuditableEntity {
   @Convert(converter = OwnerConverter.class)
   private Owner owner;
 
-  @OneToOne(mappedBy = "eCarDetails", cascade = CascadeType.ALL, optional = true, orphanRemoval = true)
+  @OneToOne(mappedBy = "eCarDetails", cascade = CascadeType.ALL, orphanRemoval = true)
   private ECarEngine eCarEngine;
 
-  @OneToOne(mappedBy = "eCarDetails", cascade = CascadeType.ALL, optional = true, orphanRemoval = true)
+  @OneToOne(mappedBy = "eCarDetails", cascade = CascadeType.ALL, orphanRemoval = true)
   private ECarFeatures eCarFeatures;
 
-  @OneToOne(mappedBy = "eCarDetails", cascade = CascadeType.ALL, optional = true, orphanRemoval = true)
+  @OneToOne(mappedBy = "eCarDetails", cascade = CascadeType.ALL, orphanRemoval = true)
   private ECarOuter eCarOuter;
 
   public static ECarDetails newInstanceForCreation() {

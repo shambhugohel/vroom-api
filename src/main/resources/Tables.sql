@@ -1,78 +1,166 @@
-CREATE TABLE `tbl_car_details`
-(
-    `id`              bigint       NOT NULL,
-    `carManufacturer` varchar(50)  NOT NULL,
-    `carModel`        varchar(75)  NOT NULL,
-    `description`     varchar(255) NOT NULL,
-    `kiloMeterDriven` bigint       NOT NULL,
-    `modelYear`       int          NOT NULL,
-    `owner`           varchar(255) NOT NULL,
-    `price` double NOT NULL,
-    PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+-- Sequences
+CREATE SEQUENCE car_details_seq START WITH 1 INCREMENT BY 50;
+CREATE SEQUENCE car_engine_seq START WITH 1 INCREMENT BY 50;
+CREATE SEQUENCE car_features_seq START WITH 1 INCREMENT BY 50;
+CREATE SEQUENCE car_outer_seq START WITH 1 INCREMENT BY 50;
+CREATE SEQUENCE car_photo_seq START WITH 1 INCREMENT BY 50;
 
-CREATE TABLE `tbl_car_engine`
+-- Table: tbl_car_details
+CREATE TABLE tbl_car_details
 (
-    `driveType`        varchar(255) NOT NULL,
-    `engineDisplacement` double NOT NULL,
-    `engineType`       varchar(255) NOT NULL,
-    `fuel`             varchar(255) NOT NULL,
-    `maxPower` double NOT NULL,
-    `maxTourque` double NOT NULL,
-    `mileage` double NOT NULL,
-    `numberOfCylinder` int          NOT NULL,
-    `transmissionType` varchar(255) NOT NULL,
-    `carDetails_id`    bigint       NOT NULL,
-    PRIMARY KEY (`carDetails_id`),
-    CONSTRAINT `FK8ad38q9r7l9yxog6qqdo5noo` FOREIGN KEY (`carDetails_id`) REFERENCES `tbl_car_details` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+    CAR_DETAIL_ID     BIGINT       NOT NULL,
+    BUSINESS_ID       VARCHAR(255) NOT NULL,
+    IS_ACTIVE         BOOLEAN      NOT NULL DEFAULT TRUE,
+    CREATED_AT        TIMESTAMP,
+    CREATED_BY        VARCHAR(50),
+    UPDATED_AT        TIMESTAMP,
+    UPDATED_BY        VARCHAR(50),
+    DELETED_AT        TIMESTAMP,
+    DELETED_BY        VARCHAR(255),
+    VERSION           BIGINT       NOT NULL,
+    CAR_MANUFACTURER  VARCHAR(255),
+    CAR_MODEL         VARCHAR(255),
+    DESCRIPTION       VARCHAR(255),
+    KILOMETER_DRIVEN  BIGINT,
+    MANUFACTURED_YEAR INT,
+    OWNER             VARCHAR(255),
+    PRICE             DOUBLE PRECISION,
+    REGISTRATION_YEAR INT,
+    PRIMARY KEY (CAR_DETAIL_ID),
+    CONSTRAINT UK_CAR_DETAILS_BUSINESS_ID UNIQUE (BUSINESS_ID)
+);
 
-CREATE TABLE `tbl_car_fetures`
+CREATE INDEX IDX_CAR_DETAILS_BUSINESS_ID ON tbl_car_details (BUSINESS_ID);
+CREATE INDEX idx_car_details_is_active ON tbl_car_details (IS_ACTIVE);
+
+-- Table: tbl_car_engine
+CREATE TABLE tbl_car_engine
 (
-    `adjustableSteering`            tinyint(1) DEFAULT '0',
-    `airConditioner`                tinyint(1) NOT NULL DEFAULT '0',
-    `antiLockBrakingSystem`         tinyint(1) DEFAULT '0',
-    `antiTheftAlarm`                tinyint(1) DEFAULT '0',
-    `centralLocking`                tinyint(1) DEFAULT '0',
-    `childSafetyLock`               tinyint(1) DEFAULT '0',
-    `driverAirbags`                 tinyint(1) DEFAULT '0',
-    `electricFoldingRearViewMirror` tinyint(1) DEFAULT '0',
-    `heater`                        tinyint(1) DEFAULT '0',
-    `leatherSeats`                  tinyint(1) DEFAULT '0',
-    `leatherSteeringWheel`          tinyint(1) DEFAULT '0',
-    `navigationSystem`              tinyint(1) DEFAULT '0',
-    `passengerAirbag`               tinyint(1) DEFAULT '0',
-    `powerDoorLocks`                tinyint(1) DEFAULT '0',
-    `powerWindowsFront`             tinyint(1) DEFAULT '0',
-    `powerWindowsRear`              tinyint(1) DEFAULT '0',
-    `rearAcVents`                   tinyint(1) DEFAULT '0',
-    `rearSeatCentreArmRest`         tinyint(1) DEFAULT '0',
-    `rearSeatHeadrest`              tinyint(1) DEFAULT '0',
-    `remoteFuelLidOpener`           tinyint(1) DEFAULT '0',
-    `remoteTrunkOpener`             tinyint(1) DEFAULT '0',
-    `reversingCamera`               tinyint(1) DEFAULT '0',
-    `sunRoof`                       tinyint(1) DEFAULT '0',
-    `carDetails_id`                 bigint NOT NULL,
-    PRIMARY KEY (`carDetails_id`),
-    CONSTRAINT `FKbbu8y3x461y2o0nmvcy0hkbyu` FOREIGN KEY (`carDetails_id`) REFERENCES `tbl_car_details` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+    CAR_ENGINE_ID       BIGINT           NOT NULL,
+    BUSINESS_ID         VARCHAR(255)     NOT NULL,
+    IS_ACTIVE           BOOLEAN          NOT NULL DEFAULT TRUE,
+    CREATED_AT          TIMESTAMP,
+    CREATED_BY          VARCHAR(50),
+    UPDATED_AT          TIMESTAMP,
+    UPDATED_BY          VARCHAR(50),
+    DELETED_AT          TIMESTAMP,
+    DELETED_BY          VARCHAR(255),
+    VERSION             BIGINT           NOT NULL,
+    DRIVETRAIN          VARCHAR(255),
+    ENGINE_DISPLACEMENT DOUBLE PRECISION NOT NULL,
+    ENGINE_TYPE         VARCHAR(255)     NOT NULL,
+    FUEL_TYPE           VARCHAR(255)     NOT NULL,
+    MAX_POWER           DOUBLE PRECISION NOT NULL,
+    MAX_TORQUE          DOUBLE PRECISION NOT NULL,
+    MILEAGE             DOUBLE PRECISION NOT NULL,
+    NUMBER_OF_CYLINDER  INT              NOT NULL,
+    TRANSMISSION_TYPE   VARCHAR(255)     NOT NULL,
+    car_detail_id       BIGINT           NOT NULL,
+    PRIMARY KEY (CAR_ENGINE_ID),
+    CONSTRAINT UK_CAR_ENGINE_BUSINESS_ID UNIQUE (BUSINESS_ID),
+    CONSTRAINT UK_CAR_ENGINE_CAR_DETAIL UNIQUE (car_detail_id),
+    CONSTRAINT FK_CAR_ENGINE_CAR_DETAIL FOREIGN KEY (car_detail_id) REFERENCES tbl_car_details (CAR_DETAIL_ID)
+);
 
-CREATE TABLE `tbl_car_outer`
+CREATE INDEX IDX_CAR_ENGINE_BUSINESS_ID ON tbl_car_engine (BUSINESS_ID);
+CREATE INDEX idx_car_engine_is_active ON tbl_car_engine (IS_ACTIVE);
+
+-- Table: tbl_car_feature
+CREATE TABLE tbl_car_feature
 (
-    `bootSpace` double NOT NULL,
-    `carBodyType`     varchar(255) NOT NULL,
-    `color`           varchar(255) NOT NULL,
-    `frontBrakeType`  varchar(255) NOT NULL,
-    `fuelTankCapacity` double NOT NULL,
-    `groundClearance` double NOT NULL,
-    `height` double NOT NULL,
-    `length` double NOT NULL,
-    `noOfDoors`       int          NOT NULL,
-    `rearBrakeType`   varchar(255) NOT NULL,
-    `seatingCapacity` int          NOT NULL,
-    `width` double NOT NULL,
-    `carDetails_id`   bigint       NOT NULL,
-    PRIMARY KEY (`carDetails_id`),
-    CONSTRAINT `FKf3i8tf2jjqxtdfvykx495vhhw` FOREIGN KEY (`carDetails_id`) REFERENCES `tbl_car_details` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+    CAR_FEATURES_ID          BIGINT       NOT NULL,
+    BUSINESS_ID              VARCHAR(255) NOT NULL,
+    IS_ACTIVE                BOOLEAN      NOT NULL DEFAULT TRUE,
+    CREATED_AT               TIMESTAMP,
+    CREATED_BY               VARCHAR(50),
+    UPDATED_AT               TIMESTAMP,
+    UPDATED_BY               VARCHAR(50),
+    DELETED_AT               TIMESTAMP,
+    DELETED_BY               VARCHAR(255),
+    VERSION                  BIGINT       NOT NULL,
+    ADJUSTABLE_STEERING      BOOLEAN      NOT NULL,
+    AIRBAG_CONFIG            VARCHAR(255) NOT NULL,
+    AIR_CONDITIONER          BOOLEAN      NOT NULL,
+    ANTI_LOCK_BRAKING_SYSTEM BOOLEAN      NOT NULL,
+    ANTI_THEFT_ALARM         BOOLEAN      NOT NULL,
+    CENTRAL_LOCKING          BOOLEAN      NOT NULL,
+    CHILD_SAFETY_LOCK        BOOLEAN      NOT NULL,
+    HEATER                   BOOLEAN      NOT NULL,
+    NAVIGATION_SYSTEM        BOOLEAN      NOT NULL,
+    POWER_DOOR_LOCKS         BOOLEAN      NOT NULL,
+    POWER_WINDOWS            BOOLEAN      NOT NULL,
+    REAR_AC_VENTS            BOOLEAN      NOT NULL,
+    REAR_SEAT_CENTRE_ARMREST BOOLEAN      NOT NULL,
+    REAR_SEAT_HEADREST       BOOLEAN      NOT NULL,
+    REAR_VIEW_MIRROR_TYPE    VARCHAR(255) NOT NULL,
+    REMOTE_TRUNK_OPENER      BOOLEAN      NOT NULL,
+    REVERSING_CAMERA         BOOLEAN      NOT NULL,
+    SEAT_MATERIAL            VARCHAR(255) NOT NULL,
+    STEERING_WHEEL_MATERIAL  VARCHAR(255) NOT NULL,
+    SUNROOF                  BOOLEAN      NOT NULL,
+    car_detail_id            BIGINT       NOT NULL,
+    PRIMARY KEY (CAR_FEATURES_ID),
+    CONSTRAINT UK_CAR_FEATURES_BUSINESS_ID UNIQUE (BUSINESS_ID),
+    CONSTRAINT UK_CAR_FEATURES_CAR_DETAIL UNIQUE (car_detail_id),
+    CONSTRAINT FK_CAR_FEATURES_CAR_DETAIL FOREIGN KEY (car_detail_id) REFERENCES tbl_car_details (CAR_DETAIL_ID)
+);
 
+CREATE INDEX IDX_CAR_FEATURES_BUSINESS_ID ON tbl_car_feature (BUSINESS_ID);
+CREATE INDEX idx_car_features_is_active ON tbl_car_feature (IS_ACTIVE);
+
+-- Table: tbl_car_outer
+CREATE TABLE tbl_car_outer
+(
+    CAR_OUTER_ID       BIGINT           NOT NULL,
+    BUSINESS_ID        VARCHAR(255)     NOT NULL,
+    IS_ACTIVE          BOOLEAN          NOT NULL DEFAULT TRUE,
+    CREATED_AT         TIMESTAMP,
+    CREATED_BY         VARCHAR(50),
+    UPDATED_AT         TIMESTAMP,
+    UPDATED_BY         VARCHAR(50),
+    DELETED_AT         TIMESTAMP,
+    DELETED_BY         VARCHAR(255),
+    VERSION            BIGINT           NOT NULL,
+    BOOT_SPACE         DOUBLE PRECISION NOT NULL,
+    CAR_BODY_TYPE      VARCHAR(255)     NOT NULL,
+    COLOR              VARCHAR(255)     NOT NULL,
+    FRONT_BRAKE_TYPE   VARCHAR(255)     NOT NULL,
+    FUEL_TANK_CAPACITY DOUBLE PRECISION NOT NULL,
+    GROUND_CLEARANCE   DOUBLE PRECISION NOT NULL,
+    HEIGHT             DOUBLE PRECISION NOT NULL,
+    LENGTH             DOUBLE PRECISION NOT NULL,
+    NO_OF_DOORS        INT              NOT NULL,
+    REAR_BRAKE_TYPE    VARCHAR(255)     NOT NULL,
+    SEATING_CAPACITY   INT              NOT NULL,
+    WIDTH              DOUBLE PRECISION NOT NULL,
+    car_detail_id      BIGINT           NOT NULL,
+    PRIMARY KEY (CAR_OUTER_ID),
+    CONSTRAINT UK_CAR_OUTER_BUSINESS_ID UNIQUE (BUSINESS_ID),
+    CONSTRAINT UK_CAR_OUTER_CAR_DETAIL UNIQUE (car_detail_id),
+    CONSTRAINT FK_CAR_OUTER_CAR_DETAIL FOREIGN KEY (car_detail_id) REFERENCES tbl_car_details (CAR_DETAIL_ID)
+);
+
+CREATE INDEX IDX_CAR_OUTER_BUSINESS_ID ON tbl_car_outer (BUSINESS_ID);
+CREATE INDEX idx_car_outer_is_active ON tbl_car_outer (IS_ACTIVE);
+
+-- Table: tbl_car_photos
+CREATE TABLE tbl_car_photos
+(
+    CAR_PHOTOS_ID  BIGINT       NOT NULL,
+    BUSINESS_ID    VARCHAR(255) NOT NULL,
+    IS_ACTIVE      BOOLEAN      NOT NULL DEFAULT TRUE,
+    CREATED_AT     TIMESTAMP,
+    CREATED_BY     VARCHAR(50),
+    UPDATED_AT     TIMESTAMP,
+    UPDATED_BY     VARCHAR(50),
+    DELETED_AT     TIMESTAMP,
+    DELETED_BY     VARCHAR(255),
+    VERSION        BIGINT       NOT NULL,
+    car_details_id BIGINT,
+    PRIMARY KEY (CAR_PHOTOS_ID),
+    CONSTRAINT UK_CAR_PHOTO_BUSINESS_ID UNIQUE (BUSINESS_ID),
+    CONSTRAINT FK_CAR_PHOTOS_CAR_DETAIL FOREIGN KEY (car_details_id) REFERENCES tbl_car_details (CAR_DETAIL_ID)
+);
+
+CREATE INDEX IDX_CAR_PHOTO_BUSINESS_ID ON tbl_car_photos (BUSINESS_ID);
+CREATE INDEX idx_car_photo_is_active ON tbl_car_photos (IS_ACTIVE);

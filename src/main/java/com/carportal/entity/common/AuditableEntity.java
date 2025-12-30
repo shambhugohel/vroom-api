@@ -5,7 +5,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Version;
-import java.io.Serializable;
 import java.time.Instant;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -24,11 +23,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Audited
 @MappedSuperclass
 @Setter(AccessLevel.PROTECTED)
+@ToString(onlyExplicitlyIncluded = true)
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(onlyExplicitlyIncluded = true, callSuper = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public abstract class AuditableEntity extends BaseEntity implements Serializable {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+public abstract class AuditableEntity extends BaseEntity {
 
   @CreatedBy
   @Column(name = ApplicationConstants.Column.CREATED_BY, nullable = false, updatable = false, length = 50)
@@ -39,13 +38,18 @@ public abstract class AuditableEntity extends BaseEntity implements Serializable
   private Instant createdAt;
 
   @LastModifiedBy
-  @Column(name = ApplicationConstants.Column.UPDATED_BY, nullable = false, length = 50)
+  @Column(name = ApplicationConstants.Column.UPDATED_BY, length = 50)
   private String updatedBy;
 
   @LastModifiedDate
   @Column(name = ApplicationConstants.Column.UPDATED_AT, nullable = false)
   private Instant updatedAt;
 
+  @Column(name = ApplicationConstants.Column.DELETED_BY)
+  private String deletedBy;
+
+  @Column(name = ApplicationConstants.Column.DELETED_AT)
+  private Instant deletedAt;
 
   @Version
   @Column(name = ApplicationConstants.Column.VERSION, nullable = false)

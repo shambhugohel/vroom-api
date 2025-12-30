@@ -16,6 +16,9 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Car outer details DTO for REST API")
 public class CarOuterDTO {
 
+  @Schema(description = "Business ID", example = "OUT20231010123123123")
+  private String businessId;
+
   @Schema(description = "Body type", example = "SEDAN")
   @NotNull
   private BodyType carBodyType;

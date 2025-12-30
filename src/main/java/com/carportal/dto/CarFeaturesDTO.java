@@ -13,6 +13,9 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Car features DTO for REST API")
 public class CarFeaturesDTO {
 
+  @Schema(description = "Business ID", example = "FTR20231010123123123")
+  private String businessId;
+
   // Cabin Comfort
   @Schema(description = "Air conditioner present", example = "true")
   private boolean airConditioner;

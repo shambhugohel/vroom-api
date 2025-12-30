@@ -51,6 +51,9 @@ public class CarDetailsDTO {
 
   @Schema(description = "Owner status", example = "FIRST")
   @NotNull
-  private String owner;  // For simplicity as string; can be enum for strong typing
+  private String owner; // For simplicity as string; can be enum for strong typing
+
+  @Schema(description = "Business ID", example = "CAR20231010123123123")
+  private String businessId;
 
 }
