@@ -33,7 +33,7 @@ import lombok.ToString;
     @Index(name = ApplicationConstants.Index.IDX_CAR_DETAILS_IS_ACTIVE, columnList = ApplicationConstants.Column.IS_ACTIVE)
 })
 @AttributeOverride(name = ApplicationConstants.Column.ID, column = @Column(name = ApplicationConstants.Column.CAR_DETAIL_ID))
-@SequenceGenerator(name = ApplicationConstants.Sequence.SEQ_GEN_NAME, sequenceName = ApplicationConstants.Sequence.CAR_DETAILS_SEQ)
+@SequenceGenerator(name = ApplicationConstants.Sequence.CAR_DETAILS_SEQ_GEN, sequenceName = ApplicationConstants.Sequence.CAR_DETAILS_SEQ)
 public class ECarDetails extends AuditableEntity {
 
   @ToString.Include

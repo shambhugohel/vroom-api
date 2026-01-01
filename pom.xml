@@ -109,8 +109,13 @@
 
     <!-- Database -->
     <dependency>
-      <artifactId>mysql-connector-j</artifactId>
-      <groupId>com.mysql</groupId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-liquibase</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- H2 for dev/testing -->

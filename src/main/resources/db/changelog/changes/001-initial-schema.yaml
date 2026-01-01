@@ -1,0 +1,1040 @@
+databaseChangeLog:
+  - changeSet:
+      id: 000-create-schemas
+      author: Shambhu
+      changes:
+        - sql:
+            sql: CREATE SCHEMA IF NOT EXISTS car_portal;
+
+  - changeSet:
+      id: 001-create-sequences
+      author: Shambhu
+      changes:
+        - createSequence:
+            sequenceName: CAR_DETAILS_SEQ
+            schemaName: car_portal
+            startValue: 1
+            incrementBy: 50
+        - createSequence:
+            sequenceName: CAR_ENGINE_SEQ
+            schemaName: car_portal
+            startValue: 1
+            incrementBy: 50
+        - createSequence:
+            sequenceName: CAR_FEATURES_SEQ
+            schemaName: car_portal
+            startValue: 1
+            incrementBy: 50
+        - createSequence:
+            sequenceName: CAR_OUTER_SEQ
+            schemaName: car_portal
+            startValue: 1
+            incrementBy: 50
+        - createSequence:
+            sequenceName: CAR_PHOTO_SEQ
+            schemaName: car_portal
+            startValue: 1
+            incrementBy: 50
+        - createSequence:
+            sequenceName: USER_SEQ
+            schemaName: car_portal
+            startValue: 1
+            incrementBy: 50
+
+  - changeSet:
+      id: 002-create-table-car-details
+      author: Shambhu
+      changes:
+        - createTable:
+            schemaName: car_portal
+            tableName: TBL_CAR_DETAILS
+            columns:
+              - column:
+                  name: CAR_DETAIL_ID
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: BUSINESS_ID
+                  type: VARCHAR(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: IS_ACTIVE
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATED_AT
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATED_BY
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: UPDATED_AT
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: UPDATED_BY
+                  type: VARCHAR(50)
+              - column:
+                  name: DELETED_AT
+                  type: TIMESTAMP
+              - column:
+                  name: DELETED_BY
+                  type: VARCHAR(255)
+              - column:
+                  name: version
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CAR_MANUFACTURER
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CAR_MODEL
+                  type: VARCHAR(75)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: PRICE
+                  type: DECIMAL(19,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MANUFACTURED_YEAR
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REGISTRATION_YEAR
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: KILOMETER_DRIVEN
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DESCRIPTION
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: OWNER
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 003-create-table-car-engine
+      author: Shambhu
+      changes:
+        - createTable:
+            schemaName: car_portal
+            tableName: TBL_CAR_ENGINE
+            columns:
+              - column:
+                  name: CAR_ENGINE_ID
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: BUSINESS_ID
+                  type: VARCHAR(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: IS_ACTIVE
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATED_AT
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATED_BY
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: UPDATED_AT
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: UPDATED_BY
+                  type: VARCHAR(50)
+              - column:
+                  name: DELETED_AT
+                  type: TIMESTAMP
+              - column:
+                  name: DELETED_BY
+                  type: VARCHAR(255)
+              - column:
+                  name: version
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MILEAGE
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: TRANSMISSION_TYPE
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ENGINE_TYPE
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ENGINE_DISPLACEMENT
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MAX_POWER
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MAX_TORQUE
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NUMBER_OF_CYLINDER
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: FUEL_TYPE
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DRIVETRAIN
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CAR_DETAIL_ID
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    unique: true
+        - addForeignKeyConstraint:
+            baseColumnNames: CAR_DETAIL_ID
+            baseTableName: TBL_CAR_ENGINE
+            baseTableSchema: car_portal
+            constraintName: fk_carengine_cardetails
+            referencedColumnNames: CAR_DETAIL_ID
+            referencedTableName: TBL_CAR_DETAILS
+            referencedTableSchema: car_portal
+
+  - changeSet:
+      id: 004-create-table-car-feature
+      author: Shambhu
+      changes:
+        - createTable:
+            schemaName: car_portal
+            tableName: TBL_CAR_FEATURE
+            columns:
+              - column:
+                  name: CAR_FEATURES_ID
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: BUSINESS_ID
+                  type: VARCHAR(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: IS_ACTIVE
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATED_AT
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATED_BY
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: UPDATED_AT
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: UPDATED_BY
+                  type: VARCHAR(50)
+              - column:
+                  name: DELETED_AT
+                  type: TIMESTAMP
+              - column:
+                  name: DELETED_BY
+                  type: VARCHAR(255)
+              - column:
+                  name: version
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: AIR_CONDITIONER
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: HEATER
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: SEAT_MATERIAL
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: STEERING_WHEEL_MATERIAL
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: POWER_WINDOWS
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ADJUSTABLE_STEERING
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REMOTE_TRUNK_OPENER
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REAR_SEAT_HEADREST
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REAR_SEAT_CENTRE_ARMREST
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REAR_AC_VENTS
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NAVIGATION_SYSTEM
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REVERSING_CAMERA
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REAR_VIEW_MIRROR_TYPE
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: SUNROOF
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ANTI_LOCK_BRAKING_SYSTEM
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CENTRAL_LOCKING
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: POWER_DOOR_LOCKS
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CHILD_SAFETY_LOCK
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ANTI_THEFT_ALARM
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: AIRBAG_CONFIG
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CAR_DETAIL_ID
+                  type: BIGINT
+                  constraints:
+                    unique: true
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: CAR_DETAIL_ID
+            baseTableName: TBL_CAR_FEATURE
+            baseTableSchema: car_portal
+            constraintName: fk_carfeature_cardetails
+            referencedColumnNames: CAR_DETAIL_ID
+            referencedTableName: TBL_CAR_DETAILS
+            referencedTableSchema: car_portal
+
+  - changeSet:
+      id: 005-create-table-car-outer
+      author: Shambhu
+      changes:
+        - createTable:
+            schemaName: car_portal
+            tableName: TBL_CAR_OUTER
+            columns:
+              - column:
+                  name: CAR_OUTER_ID
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: BUSINESS_ID
+                  type: VARCHAR(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: IS_ACTIVE
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATED_AT
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATED_BY
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: UPDATED_AT
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: UPDATED_BY
+                  type: VARCHAR(50)
+              - column:
+                  name: DELETED_AT
+                  type: TIMESTAMP
+              - column:
+                  name: DELETED_BY
+                  type: VARCHAR(255)
+              - column:
+                  name: version
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CAR_BODY_TYPE
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: COLOR
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: LENGTH
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: HEIGHT
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: WIDTH
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: GROUND_CLEARANCE
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: BOOT_SPACE
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: SEATING_CAPACITY
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: FUEL_TANK_CAPACITY
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NO_OF_DOORS
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: FRONT_BRAKE_TYPE
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REAR_BRAKE_TYPE
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CAR_DETAIL_ID
+                  type: BIGINT
+                  constraints:
+                    unique: true
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: CAR_DETAIL_ID
+            baseTableName: TBL_CAR_OUTER
+            baseTableSchema: car_portal
+            constraintName: fk_carouter_cardetails
+            referencedColumnNames: CAR_DETAIL_ID
+            referencedTableName: TBL_CAR_DETAILS
+            referencedTableSchema: car_portal
+
+  - changeSet:
+      id: 006-create-table-car-photos
+      author: Shambhu
+      changes:
+        - createTable:
+            schemaName: car_portal
+            tableName: TBL_CAR_PHOTOS
+            columns:
+              - column:
+                  name: CAR_PHOTOS_ID
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: BUSINESS_ID
+                  type: VARCHAR(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: IS_ACTIVE
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATED_AT
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CREATED_BY
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: UPDATED_AT
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: UPDATED_BY
+                  type: VARCHAR(50)
+              - column:
+                  name: DELETED_AT
+                  type: TIMESTAMP
+              - column:
+                  name: DELETED_BY
+                  type: VARCHAR(255)
+              - column:
+                  name: version
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CAR_DETAIL_ID
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - createIndex:
+            indexName: idx_carphotos_cardetail
+            schemaName: car_portal
+            tableName: TBL_CAR_PHOTOS
+            columns:
+              - column:
+                  name: CAR_DETAIL_ID
+        - addForeignKeyConstraint:
+            baseColumnNames: CAR_DETAIL_ID
+            baseTableName: TBL_CAR_PHOTOS
+            baseTableSchema: car_portal
+            constraintName: fk_carphotos_cardetails
+            referencedColumnNames: CAR_DETAIL_ID
+            referencedTableName: TBL_CAR_DETAILS
+            referencedTableSchema: car_portal
+
+  - changeSet:
+      id: 007-create-table-user-cars
+      author: Shambhu
+      changes:
+        - createTable:
+            schemaName: car_portal
+            tableName: TBL_USER_CARS
+            columns:
+              - column:
+                  name: userId
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+  - changeSet:
+      id: 008-create-audit-tables
+      author: Shambhu
+      changes:
+        # REVINFO
+        - createTable:
+            schemaName: public
+            tableName: REVINFO
+            columns:
+              - column:
+                  name: REV
+                  type: INT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  defaultValueComputed: nextval('public.REVINFO_SEQ')
+              - column:
+                  name: REVTSTMP
+                  type: BIGINT
+        - createSequence:
+            sequenceName: REVINFO_SEQ
+            schemaName: public
+            startValue: 1
+            incrementBy: 50
+
+        # tbl_car_details_AUD
+        - createTable:
+            schemaName: car_portal
+            tableName: TBL_CAR_DETAILS_AUD
+            columns: &audit_base_columns
+              - column:
+                  name: REV
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REVTYPE
+                  type: SMALLINT
+              - column:
+                  name: BUSINESS_ID
+                  type: VARCHAR(255)
+              - column:
+                  name: IS_ACTIVE
+                  type: BOOLEAN
+              - column:
+                  name: CREATED_AT
+                  type: TIMESTAMP
+              - column:
+                  name: CREATED_BY
+                  type: VARCHAR(50)
+              - column:
+                  name: UPDATED_AT
+                  type: TIMESTAMP
+              - column:
+                  name: UPDATED_BY
+                  type: VARCHAR(50)
+              - column:
+                  name: DELETED_AT
+                  type: TIMESTAMP
+              - column:
+                  name: DELETED_BY
+                  type: VARCHAR(255)
+              - column:
+                  name: version
+                  type: BIGINT
+
+        - addColumn:
+            schemaName: car_portal
+            tableName: TBL_CAR_DETAILS_AUD
+            columns:
+              - column:
+                  name: CAR_DETAIL_ID
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CAR_MANUFACTURER
+                  type: VARCHAR(50)
+              - column:
+                  name: CAR_MODEL
+                  type: VARCHAR(75)
+              - column:
+                  name: PRICE
+                  type: DECIMAL(19,2)
+              - column:
+                  name: MANUFACTURED_YEAR
+                  type: INT
+              - column:
+                  name: REGISTRATION_YEAR
+                  type: INT
+              - column:
+                  name: KILOMETER_DRIVEN
+                  type: BIGINT
+              - column:
+                  name: DESCRIPTION
+                  type: VARCHAR(255)
+              - column:
+                  name: OWNER
+                  type: VARCHAR(255)
+
+        - addPrimaryKey:
+            columnNames: CAR_DETAIL_ID, REV
+            constraintName: pk_tbl_car_details_aud
+            schemaName: car_portal
+            tableName: TBL_CAR_DETAILS_AUD
+        - addForeignKeyConstraint:
+            baseColumnNames: REV
+            baseTableName: TBL_CAR_DETAILS_AUD
+            baseTableSchema: car_portal
+            constraintName: fk_tbl_car_details_aud_rev
+            referencedColumnNames: REV
+            referencedTableName: REVINFO
+            referencedTableSchema: public
+
+        # tbl_car_engine_AUD
+        - createTable:
+            schemaName: car_portal
+            tableName: TBL_CAR_ENGINE_AUD
+            columns: *audit_base_columns
+        - addColumn:
+            schemaName: car_portal
+            tableName: TBL_CAR_ENGINE_AUD
+            columns:
+              - column:
+                  name: CAR_ENGINE_ID
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MILEAGE
+                  type: DOUBLE
+              - column:
+                  name: TRANSMISSION_TYPE
+                  type: VARCHAR(255)
+              - column:
+                  name: ENGINE_TYPE
+                  type: VARCHAR(255)
+              - column:
+                  name: ENGINE_DISPLACEMENT
+                  type: DOUBLE
+              - column:
+                  name: MAX_POWER
+                  type: DOUBLE
+              - column:
+                  name: MAX_TORQUE
+                  type: DOUBLE
+              - column:
+                  name: NUMBER_OF_CYLINDER
+                  type: INT
+              - column:
+                  name: FUEL_TYPE
+                  type: VARCHAR(50)
+              - column:
+                  name: DRIVETRAIN
+                  type: VARCHAR(50)
+              - column:
+                  name: CAR_DETAIL_ID
+                  type: BIGINT
+
+        - addPrimaryKey:
+            columnNames: CAR_ENGINE_ID, REV
+            constraintName: pk_tbl_car_engine_aud
+            schemaName: car_portal
+            tableName: TBL_CAR_ENGINE_AUD
+        - addForeignKeyConstraint:
+            baseColumnNames: REV
+            baseTableName: TBL_CAR_ENGINE_AUD
+            baseTableSchema: car_portal
+            constraintName: fk_tbl_car_engine_aud_rev
+            referencedColumnNames: REV
+            referencedTableName: REVINFO
+            referencedTableSchema: public
+
+        # tbl_car_feature_AUD
+        - createTable:
+            schemaName: car_portal
+            tableName: TBL_CAR_FEATURE_AUD
+            columns: *audit_base_columns
+        - addColumn:
+            schemaName: car_portal
+            tableName: TBL_CAR_FEATURE_AUD
+            columns:
+              - column:
+                  name: CAR_FEATURES_ID
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: AIR_CONDITIONER
+                  type: BOOLEAN
+              - column:
+                  name: HEATER
+                  type: BOOLEAN
+              - column:
+                  name: SEAT_MATERIAL
+                  type: VARCHAR(50)
+              - column:
+                  name: STEERING_WHEEL_MATERIAL
+                  type: VARCHAR(50)
+              - column:
+                  name: POWER_WINDOWS
+                  type: VARCHAR(255)
+              - column:
+                  name: ADJUSTABLE_STEERING
+                  type: BOOLEAN
+              - column:
+                  name: REMOTE_TRUNK_OPENER
+                  type: BOOLEAN
+              - column:
+                  name: REAR_SEAT_HEADREST
+                  type: BOOLEAN
+              - column:
+                  name: REAR_SEAT_CENTRE_ARMREST
+                  type: BOOLEAN
+              - column:
+                  name: REAR_AC_VENTS
+                  type: BOOLEAN
+              - column:
+                  name: NAVIGATION_SYSTEM
+                  type: BOOLEAN
+              - column:
+                  name: REVERSING_CAMERA
+                  type: BOOLEAN
+              - column:
+                  name: REAR_VIEW_MIRROR_TYPE
+                  type: VARCHAR(255)
+              - column:
+                  name: SUNROOF
+                  type: BOOLEAN
+              - column:
+                  name: ANTI_LOCK_BRAKING_SYSTEM
+                  type: BOOLEAN
+              - column:
+                  name: CENTRAL_LOCKING
+                  type: BOOLEAN
+              - column:
+                  name: POWER_DOOR_LOCKS
+                  type: BOOLEAN
+              - column:
+                  name: CHILD_SAFETY_LOCK
+                  type: BOOLEAN
+              - column:
+                  name: ANTI_THEFT_ALARM
+                  type: BOOLEAN
+              - column:
+                  name: AIRBAG_CONFIG
+                  type: INT
+              - column:
+                  name: CAR_DETAIL_ID
+                  type: BIGINT
+
+        - addPrimaryKey:
+            columnNames: CAR_FEATURES_ID, REV
+            constraintName: pk_tbl_car_feature_aud
+            schemaName: car_portal
+            tableName: TBL_CAR_FEATURE_AUD
+        - addForeignKeyConstraint:
+            baseColumnNames: REV
+            baseTableName: TBL_CAR_FEATURE_AUD
+            baseTableSchema: car_portal
+            constraintName: fk_tbl_car_feature_aud_rev
+            referencedColumnNames: REV
+            referencedTableName: REVINFO
+            referencedTableSchema: public
+
+        # tbl_car_outer_AUD
+        - createTable:
+            schemaName: car_portal
+            tableName: TBL_CAR_OUTER_AUD
+            columns: *audit_base_columns
+        - addColumn:
+            schemaName: car_portal
+            tableName: TBL_CAR_OUTER_AUD
+            columns:
+              - column:
+                  name: CAR_OUTER_ID
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CAR_BODY_TYPE
+                  type: VARCHAR(50)
+              - column:
+                  name: COLOR
+                  type: VARCHAR(255)
+              - column:
+                  name: LENGTH
+                  type: DOUBLE
+              - column:
+                  name: HEIGHT
+                  type: DOUBLE
+              - column:
+                  name: WIDTH
+                  type: DOUBLE
+              - column:
+                  name: GROUND_CLEARANCE
+                  type: DOUBLE
+              - column:
+                  name: BOOT_SPACE
+                  type: DOUBLE
+              - column:
+                  name: SEATING_CAPACITY
+                  type: INT
+              - column:
+                  name: FUEL_TANK_CAPACITY
+                  type: DOUBLE
+              - column:
+                  name: NO_OF_DOORS
+                  type: INT
+              - column:
+                  name: FRONT_BRAKE_TYPE
+                  type: VARCHAR(50)
+              - column:
+                  name: REAR_BRAKE_TYPE
+                  type: VARCHAR(50)
+              - column:
+                  name: CAR_DETAIL_ID
+                  type: BIGINT
+
+        - addPrimaryKey:
+            columnNames: CAR_OUTER_ID, REV
+            constraintName: pk_tbl_car_outer_aud
+            schemaName: car_portal
+            tableName: TBL_CAR_OUTER_AUD
+        - addForeignKeyConstraint:
+            baseColumnNames: REV
+            baseTableName: TBL_CAR_OUTER_AUD
+            baseTableSchema: car_portal
+            constraintName: fk_tbl_car_outer_aud_rev
+            referencedColumnNames: REV
+            referencedTableName: REVINFO
+            referencedTableSchema: public
+
+        # tbl_car_photos_AUD
+        - createTable:
+            schemaName: car_portal
+            tableName: TBL_CAR_PHOTOS_AUD
+            columns: *audit_base_columns
+        - addColumn:
+            schemaName: car_portal
+            tableName: TBL_CAR_PHOTOS_AUD
+            columns:
+              - column:
+                  name: CAR_PHOTOS_ID
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CAR_DETAIL_ID
+                  type: BIGINT
+
+        - addPrimaryKey:
+            columnNames: CAR_PHOTOS_ID, REV
+            constraintName: pk_tbl_car_photos_aud
+            schemaName: car_portal
+            tableName: TBL_CAR_PHOTOS_AUD
+        - addForeignKeyConstraint:
+            baseColumnNames: REV
+            baseTableName: TBL_CAR_PHOTOS_AUD
+            baseTableSchema: car_portal
+            constraintName: fk_tbl_car_photos_aud_rev
+            referencedColumnNames: REV
+            referencedTableName: REVINFO
+            referencedTableSchema: public
+
+  - changeSet:
+      id: 999-grant-app-access
+      author: Shambhu
+      runAlways: true
+      changes:
+        - sql: |
+            GRANT USAGE ON SCHEMA car_portal TO app_car_portal;
+            GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA car_portal TO app_car_portal;
+            GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA car_portal TO app_car_portal;
+
+            ALTER DEFAULT PRIVILEGES FOR ROLE dba_car_portal IN SCHEMA car_portal
+            GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO app_car_portal;
+
+            ALTER DEFAULT PRIVILEGES FOR ROLE dba_car_portal IN SCHEMA car_portal
+            GRANT USAGE, SELECT ON SEQUENCES TO app_car_portal;

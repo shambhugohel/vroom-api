@@ -8,21 +8,26 @@ public class ApplicationConstants {
   public class Db {
 
     public static final String TBL_SCHEMA_CAR_PORTAL = "car_portal";
-    public static final String TBL_CAR_DETAILS = "tbl_car_details";
-    public static final String TBL_CAR_ENGINE = "tbl_car_engine";
-    public static final String TBL_CAR_FEATURES = "tbl_car_feature";
-    public static final String TBL_CAR_OUTER = "tbl_car_outer";
-    public static final String TBL_CAR_PHOTOS = "tbl_car_photos";
+    public static final String TBL_CAR_DETAILS = "TBL_CAR_DETAILS";
+    public static final String TBL_CAR_ENGINE = "TBL_CAR_ENGINE";
+    public static final String TBL_CAR_FEATURES = "TBL_CAR_FEATURE";
+    public static final String TBL_CAR_OUTER = "TBL_CAR_OUTER";
+    public static final String TBL_CAR_PHOTOS = "TBL_CAR_PHOTOS";
+    public static final String TBL_USER_CARS = "TBL_USER_CARS";
 
   }
 
   public class Sequence {
 
-    public static final String SEQ_GEN_NAME = "seq_gen";
+    public static final String CAR_DETAILS_SEQ_GEN = "CAR_DETAILS_SEQ_GEN";
     public static final String CAR_DETAILS_SEQ = "CAR_DETAILS_SEQ";
+    public static final String CAR_ENGINE_SEQ_GEN = "CAR_ENGINE_SEQ_GEN";
     public static final String CAR_ENGINE_SEQ = "CAR_ENGINE_SEQ";
+    public static final String CAR_FEATURES_SEQ_GEN = "CAR_FEATURES_SEQ_GEN";
     public static final String CAR_FEATURES_SEQ = "CAR_FEATURES_SEQ";
+    public static final String CAR_OUTER_SEQ_GEN = "CAR_OUTER_SEQ_GEN";
     public static final String CAR_OUTER_SEQ = "CAR_OUTER_SEQ";
+    public static final String CAR_PHOTO_SEQ_GEN = "CAR_PHOTO_SEQ_GEN";
     public static final String CAR_PHOTO_SEQ = "CAR_PHOTO_SEQ";
 
   }
@@ -53,14 +58,14 @@ public class ApplicationConstants {
 
     // CarEngine
     public static final String CAR_ENGINE_ID = "CAR_ENGINE_ID";
-    public static final String MILEAGE = "OWNER";
-    public static final String TRANSMISSION_TYPE = "OWNER";
-    public static final String ENGINE_TYPE = "OWNER";
-    public static final String ENGINE_DISPLACEMENT = "OWNER";
-    public static final String MAX_POWER = "OWNER";
-    public static final String MAX_TORQUE = "OWNER";
-    public static final String NUMBER_OF_CYLINDER = "OWNER";
-    public static final String FUEL_TYPE = "OWNER";
+    public static final String MILEAGE = "MILEAGE";
+    public static final String TRANSMISSION_TYPE = "TRANSMISSION_TYPE";
+    public static final String ENGINE_TYPE = "ENGINE_TYPE";
+    public static final String ENGINE_DISPLACEMENT = "ENGINE_DISPLACEMENT";
+    public static final String MAX_POWER = "MAX_POWER";
+    public static final String MAX_TORQUE = "MAX_TORQUE";
+    public static final String NUMBER_OF_CYLINDER = "NUMBER_OF_CYLINDER";
+    public static final String FUEL_TYPE = "FUEL_TYPE";
     public static final String DRIVETRAIN = "DRIVETRAIN";
 
     // CarFeatures

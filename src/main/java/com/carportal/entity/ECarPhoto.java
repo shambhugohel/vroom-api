@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -29,10 +30,11 @@ import lombok.ToString;
     @Index(name = ApplicationConstants.Index.IDX_CAR_PHOTO_IS_ACTIVE, columnList = ApplicationConstants.Column.IS_ACTIVE)
 })
 @AttributeOverride(name = ApplicationConstants.Column.ID, column = @Column(name = ApplicationConstants.Column.CAR_PHOTOS_ID))
-@SequenceGenerator(name = ApplicationConstants.Sequence.SEQ_GEN_NAME, sequenceName = ApplicationConstants.Sequence.CAR_PHOTO_SEQ)
+@SequenceGenerator(name = ApplicationConstants.Sequence.CAR_PHOTO_SEQ_GEN, sequenceName = ApplicationConstants.Sequence.CAR_PHOTO_SEQ)
 public class ECarPhoto extends AuditableEntity {
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = com.carportal.constants.ApplicationConstants.Column.CAR_DETAIL_ID, nullable = false)
   private ECarDetails ECarDetails;
 
 }

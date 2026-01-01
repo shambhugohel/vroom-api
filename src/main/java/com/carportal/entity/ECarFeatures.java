@@ -31,7 +31,7 @@ import lombok.ToString;
     @Index(name = ApplicationConstants.Index.IDX_CAR_FEATURES_IS_ACTIVE, columnList = ApplicationConstants.Column.IS_ACTIVE)
 })
 @AttributeOverride(name = ApplicationConstants.Column.ID, column = @Column(name = ApplicationConstants.Column.CAR_FEATURES_ID))
-@SequenceGenerator(name = ApplicationConstants.Sequence.SEQ_GEN_NAME, sequenceName = ApplicationConstants.Sequence.CAR_FEATURES_SEQ)
+@SequenceGenerator(name = ApplicationConstants.Sequence.CAR_FEATURES_SEQ_GEN, sequenceName = ApplicationConstants.Sequence.CAR_FEATURES_SEQ)
 public class ECarFeatures extends AuditableEntity {
 
   // Cabin Comfort
@@ -102,7 +102,7 @@ public class ECarFeatures extends AuditableEntity {
   private int airbagConfig;
 
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "car_detail_id")
+  @JoinColumn(name = ApplicationConstants.Column.CAR_DETAIL_ID)
   private ECarDetails eCarDetails;
 
   public static ECarFeatures newInstanceForCreation() {

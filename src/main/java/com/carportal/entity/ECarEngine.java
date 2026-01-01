@@ -33,7 +33,7 @@ import lombok.ToString;
     @Index(name = ApplicationConstants.Index.IDX_CAR_ENGINE_IS_ACTIVE, columnList = ApplicationConstants.Column.IS_ACTIVE)
 })
 @AttributeOverride(name = ApplicationConstants.Column.ID, column = @Column(name = ApplicationConstants.Column.CAR_ENGINE_ID))
-@SequenceGenerator(name = ApplicationConstants.Sequence.SEQ_GEN_NAME, sequenceName = ApplicationConstants.Sequence.CAR_ENGINE_SEQ)
+@SequenceGenerator(name = ApplicationConstants.Sequence.CAR_ENGINE_SEQ_GEN, sequenceName = ApplicationConstants.Sequence.CAR_ENGINE_SEQ)
 public class ECarEngine extends AuditableEntity {
 
   @Column(name = ApplicationConstants.Column.MILEAGE, nullable = false)
@@ -64,7 +64,7 @@ public class ECarEngine extends AuditableEntity {
   private Drivetrain drivetrain;
 
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "car_detail_id", unique = true, nullable = false)
+  @JoinColumn(name = ApplicationConstants.Column.CAR_DETAIL_ID, unique = true, nullable = false)
   private ECarDetails eCarDetails;
 
   public static ECarEngine newInstanceForCreation() {

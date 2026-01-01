@@ -32,7 +32,7 @@ import lombok.ToString;
     @Index(name = ApplicationConstants.Index.IDX_CAR_OUTER_IS_ACTIVE, columnList = ApplicationConstants.Column.IS_ACTIVE)
 })
 @AttributeOverride(name = ApplicationConstants.Column.ID, column = @Column(name = ApplicationConstants.Column.CAR_OUTER_ID))
-@SequenceGenerator(name = ApplicationConstants.Sequence.SEQ_GEN_NAME, sequenceName = ApplicationConstants.Sequence.CAR_OUTER_SEQ)
+@SequenceGenerator(name = ApplicationConstants.Sequence.CAR_OUTER_SEQ_GEN, sequenceName = ApplicationConstants.Sequence.CAR_OUTER_SEQ)
 public class ECarOuter extends AuditableEntity {
 
   @Column(name = ApplicationConstants.Column.CAR_BODY_TYPE, nullable = false)
@@ -72,7 +72,7 @@ public class ECarOuter extends AuditableEntity {
   private BrakeType rearBrakeType; // Enum: DISC, DRUM
 
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "car_detail_id")
+  @JoinColumn(name = ApplicationConstants.Column.CAR_DETAIL_ID)
   private ECarDetails eCarDetails;
 
   public static ECarOuter newInstanceForCreation() {
