@@ -1,17 +1,9 @@
-# Compiled class file
+# ─── Compiled / Build output ───────────────────────────────────────────────────
 *.class
+target/
+bin/
 
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-*.settings
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
+# ─── Package archives ───────────────────────────────────────────────────────────
 *.jar
 *.war
 *.nar
@@ -20,17 +12,52 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+# ─── Logs ───────────────────────────────────────────────────────────────────────
+*.log
+logs/
+test-output/
 
+# ─── JVM crash logs ─────────────────────────────────────────────────────────────
+hs_err_pid*
+replay_pid*
+
+# ─── IntelliJ IDEA ──────────────────────────────────────────────────────────────
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ─── Eclipse / Spring Tools ─────────────────────────────────────────────────────
 .classpath
 .project
-.settings
 .settings/
 .factorypath
-target/
-target/*
-bin/
-test-output/
+.springBeans
+
+# ─── BlueJ ──────────────────────────────────────────────────────────────────────
+*.ctxt
+
+# ─── Mobile Tools for Java (J2ME) ────────────────────────────────────────────────
+.mtj.tmp/
+
+# ─── macOS ──────────────────────────────────────────────────────────────────────
 .DS_Store
-.project
+.AppleDouble
+.LSOverride
+._*
+
+# ─── Maven scratch / backup files ───────────────────────────────────────────────
+pom.xml.old
+pom.xml.versionsBackup
+
+# ─── Utility / scratch scripts (not part of source) ─────────────────────────────
+refactor.py
+
+# ─── Docker local overrides ─────────────────────────────────────────────────────
+docker-compose.override.yml
+
+# ─── Environment / secrets ──────────────────────────────────────────────────────
+.env
+.env.local
+*.env
